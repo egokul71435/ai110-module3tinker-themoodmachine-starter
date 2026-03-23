@@ -71,6 +71,12 @@ SAMPLE_POSTS = [
     "i hate how boring this week has been",
     "went to the store and came back",
     "love this chill weekend so relaxed rn ❤️",
+    "not gonna lie this is pretty awesome",
+    "i feel sad but also grateful for my friends",
+    "whatever i guess it does not matter",
+    "this stressed me out but the results were great",
+    "honestly happy for once",
+    "bad news after bad news today im done",
 ]
 
 # Human labels for each post above.
@@ -94,6 +100,12 @@ TRUE_LABELS = [
     "negative",  # "i hate how boring this week has been" 
     "neutral",   # "went to the store and came back" 
     "positive",  # "love this chill weekend so relaxed rn ❤️"
+    "positive",  # "not gonna lie this is pretty awesome"
+    "mixed",     # "i feel sad but also grateful for my friends"
+    "neutral",   # "whatever i guess it does not matter"
+    "mixed",     # "this stressed me out but the results were great"
+    "positive",  # "honestly happy for once"
+    "negative",  # "bad news after bad news today im done"
 ]
 
 # TODO: Add 5-10 more posts and labels.
