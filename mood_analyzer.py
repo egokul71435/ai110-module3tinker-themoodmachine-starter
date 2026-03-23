@@ -99,6 +99,16 @@ class MoodAnalyzer:
         score = 0
         negators = {"not", "no", "never", "dont", "doesn", "isn", "wasn", "aren"}
 
+        # Emoji signals scored directly from the raw text
+        positive_emojis = {"😂", "❤️", "😊", "🥰", "😍", "💪", "🎉", "✨", ":)", ":-)"}
+        negative_emojis = {"💀", "😢", "😭", "😞", "😡", "🥲", ":(", ":-("}
+        for emoji in positive_emojis:
+            if emoji in text:
+                score += 1
+        for emoji in negative_emojis:
+            if emoji in text:
+                score -= 1
+
         for i, token in enumerate(tokens):
             # Check if the previous token is a negator
             negated = i > 0 and tokens[i - 1] in negators
@@ -130,6 +140,28 @@ class MoodAnalyzer:
         Just remember that whatever labels you return should match the labels
         you use in TRUE_LABELS in dataset.py if you care about accuracy.
         """
+        tokens = self.preprocess(text)
+        negators = {"not", "no", "never", "dont", "doesn", "isn", "wasn", "aren"}
+
+        has_positive = False
+        has_negative = False
+        for i, token in enumerate(tokens):
+            negated = i > 0 and tokens[i - 1] in negators
+            if token in self.positive_words:
+                if negated:
+                    has_negative = True
+                else:
+                    has_positive = True
+            elif token in self.negative_words:
+                if negated:
+                    has_positive = True
+                else:
+                    has_negative = True
+
+        # If both signals are present, it's mixed
+        if has_positive and has_negative:
+            return "mixed"
+
         score = self.score_text(text)
 
         if score > 0:
