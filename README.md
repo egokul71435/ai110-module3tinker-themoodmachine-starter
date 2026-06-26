@@ -10,11 +10,11 @@ This lab gives you hands on experience with how basic systems work, where they b
 
 ```plaintext
 ├── dataset.py         # Starter word lists and example posts (you will expand these)
-├── mood_analyzer.py   # Rule based classifier with TODOs to improve
+├── mood_analyzer.py   # Rule based classifier
 ├── main.py            # Runs the rule based model and interactive demo
-├── ml_experiments.py  # (New) A tiny ML classifier using scikit-learn
-├── model_card.md      # Template to fill out after experimenting
-└── requirements.txt   # Dependencies for optional ML exploration
+├── ml_experiments.py  # A tiny ML classifier using scikit-learn
+├── model_card.md      # Completed model card with findings and limitations
+└── requirements.txt   # Python dependencies
 ```
 
 ---
@@ -151,7 +151,7 @@ These limitations are inherent to rule-based keyword matching and motivate the u
 ### The Two Models
 
 - **Rule-based (`MoodAnalyzer`):** Scores text by matching tokens against curated positive/negative word lists, with negation handling and emoji signals. Labels are derived from the net score and the presence of mixed signals.
-- **ML model (`ml_experiments.py`):** Uses scikit-learn's `CountVectorizer` (bag-of-words) and `LogisticRegression` trained on `SAMPLE_POSTS` and `TRUE_LABELS`.
+- **ML model (`ml_experiments.py`):** Uses scikit-learn's `CountVectorizer` (bag-of-words) and `LogisticRegression` with `class_weight="balanced"` trained on `SAMPLE_POSTS` and `TRUE_LABELS`. Balanced weighting prevents the majority class (positive, 6 of 20 examples) from biasing the model's default prediction.
 
 ### Performance
 

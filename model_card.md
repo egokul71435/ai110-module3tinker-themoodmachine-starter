@@ -84,6 +84,9 @@ Bag-of-words representation using `CountVectorizer`. Each unique word becomes a 
 **Training data:**
 Trained on the 20 posts in `SAMPLE_POSTS` with labels from `TRUE_LABELS`.
 
+**Class weighting:**
+`LogisticRegression` is trained with `class_weight="balanced"`. The dataset has an uneven class distribution (6 positive, 5 negative, 5 mixed, 4 neutral), which would otherwise bias the model's default prediction toward "positive". Balanced weighting scales each class's loss contribution inversely by its frequency, so the model's baseline when it has no strong signal is effectively "neutral" rather than the most common label.
+
 **Training behavior:**
 - At 14 posts: 100% training accuracy
 - At 20 posts: 100% training accuracy
@@ -93,6 +96,7 @@ Trained on the 20 posts in `SAMPLE_POSTS` with labels from `TRUE_LABELS`.
 - Learns word-to-label associations from data without needing curated word lists
 - Handles mixed detection through learned patterns rather than explicit rules
 - Correctly classified `"i feel sad but also grateful for my friends"` as mixed, which the rule-based model missed
+- Class balancing prevents the majority label from dominating low-confidence predictions
 
 **Weaknesses:**
 - 100% accuracy on training data likely reflects **memorization**, not generalization — with only 20 examples, the model has enough capacity to memorize every input

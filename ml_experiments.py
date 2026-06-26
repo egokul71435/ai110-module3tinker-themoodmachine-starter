@@ -43,7 +43,9 @@ def train_ml_model(
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform(texts)
 
-    model = LogisticRegression(max_iter=1000)
+    # class_weight='balanced' prevents majority-class bias; without it the model's
+    # default prediction skews toward 'positive' (the most common label in the dataset).
+    model = LogisticRegression(max_iter=1000, class_weight="balanced")
     model.fit(X, labels)
 
     return vectorizer, model
@@ -71,11 +73,7 @@ def evaluate_on_dataset(
     preds = model.predict(X)
 
     print("=== ML Model Evaluation on Dataset ===")
-    correct = 0
     for text, true_label, pred_label in zip(texts, labels, preds):
-        is_correct = pred_label == true_label
-        if is_correct:
-            correct += 1
         print(f'"{text}" -> predicted={pred_label}, true={true_label}')
 
     accuracy = accuracy_score(labels, preds)
